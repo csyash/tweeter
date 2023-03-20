@@ -1,0 +1,78 @@
+{% extends 'base/homePage.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/homePage1.css' %}?v=3">
+<script src="{% static 'js/likeHandler.js' %}?v=3"></script>
+{% endblock css %}
+
+{% block feed %}
+
+<div class="tweet card "  data-id={{tweet.id}}>
+    <div class="tweet-header">
+        <h2>@{{tweet.host}}</h2>
+        <span>20m</span>
+    </div>
+    <div class="tweet-body">
+        {{tweet.desciption}}
+    </div>
+    <div class="tweet-footer">
+       
+        <div class="likes">
+            <i class="fa-solid fa-comment"></i> </i>
+            
+        </div>
+        <div class="likes">
+            <i class="fa-solid fa-retweet retweet-icon"></i>
+          <span>
+              {{tweet.retweets.count}}
+          </span>
+        </div>
+        <div class="likes">
+            <i class="fa-solid fa-heart heart-icon"></i>
+            <span>
+            {{tweet.liked.count}}
+        </span>
+        </div>
+    </div>
+
+    {% if request.user != tweet.host %}
+         <form action="{% url 'comment' tweet.id %}" method="post" class="my-5">
+            {% csrf_token %}
+            <div class="input-group input-group-lg">
+                <span class="input-group-text" id="inputGroup-sizing-lg">{{request.user}}</span>
+                <input type="text" class="form-control" placeholder="Comment Here..." aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" name="comment">
+              </div>
+          </form>
+    {% endif %}
+
+    {% if comments %}
+
+        <h2>Comments</h2>
+        <div class="comments">
+            {% for comment in comments%}
+
+            <div class="comment card">
+                <div class="comment-header">
+                    <h2>{{comment.commenter}}</h2>
+                </div>
+                <div class="comment-body">
+                    <p>{{comment.comment_description}}</p>
+                </div>
+                <div class="likes">
+                    <i class="fa-solid fa-heart heart-icon"></i>
+                    {{comment.likes}}
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+ 
+
+    {% else %}
+    <h1>No comment...</h1>
+
+    {% endif %}
+
+</div>
+{% endblock feed %}

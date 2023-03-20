@@ -1,0 +1,64 @@
+ .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        height: 100vh;
+    }
+
+    .card{
+        border: 1px solid black;
+        padding: 1rem;
+        border-radius: 0.5em;
+    }
+    
+    .sidebar a{
+        margin: 1rem 0;
+        font-size: larger;
+        text-decoration: none;
+    }
+    
+    .sidebar, .side-menu{
+        position:sticky;
+        height: 90vh;
+    }
+
+    .sidebar , .feed , .side-menu{
+       
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .sidebar, .side-menu{
+        justify-content: space-between;
+    }
+
+    .feed{
+        gap: 20px;
+    }
+
+    .tweet{
+        min-width: 90%;
+    }
+
+    .tweet-header h2{
+        display:inline;
+        margin: 10px 0px;
+    }
+
+    .tweet-footer{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .tweet-body, .tweet-header{
+        padding: 1rem;
+    }
+
+    .heart-icon:hover{
+        filter: invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(154%) contrast(97%);  
+    }
+    .retweet-icon:hover{
+        filter: invert(200%) sepia(1) saturate(2878%) hue-rotate(346deg) brightness(154%) contrast(97%);  
+    }

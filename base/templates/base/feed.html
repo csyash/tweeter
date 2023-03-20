@@ -1,0 +1,69 @@
+{% extends 'base/homePage.html' %}
+{% load static %}
+
+{% block js %}
+<script src="{% static 'js/feed.js' %}?v=2"></script>
+<script src="{% static 'js/likeHandler.js' %}?v=3"></script>
+{% endblock js %}
+
+{% block feed %}
+
+<div class="card tweet">
+{% block user_following_followers %}
+{% endblock user_following_followers %}
+    <form action="{% url 'homePage' %}" method="post">
+    {% csrf_token %}
+        <div class="tweet-header form-group">
+            <h2>
+                {{request.user}}
+            </h2>
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Tweet Here..." rows="3" name="tweet"></textarea>
+        </div>
+        <div class="tweet-footer">
+            <button type="submit" class="btn btn-primary mb-2 my-3">Tweet</button>
+        </div>
+    </form>
+</div>
+    {% for tweet in tweets %}
+
+    <div class="tweet card" data-id={{tweet.id}}>
+        <div class="tweet-header">
+            <a href="{% url 'profilePage' tweet.host.username %}" style="text-decoration: none;">
+                <h2>
+                    @{{tweet.host}}
+                </h2>
+            </a>
+            <span id="time-since-tweet-created">20m</span>
+        </div>
+        <div class="tweet-body">
+            {{tweet.desciption}}
+        </div>
+        <div class="tweet-footer">
+           
+            <div class="likes">
+                <i class="fa-solid fa-comment"></i> </i>
+                <span>
+                    {{ tweet.comments.count }}
+                </span>
+            </div>
+            <div class="likes">
+                <i class="fa-solid fa-retweet retweet-icon"></i>
+              <span>{{tweet.retweets.count}}</span>
+            </div>
+            <div class="likes">
+                <i class="fa-solid fa-heart heart-icon"></i>
+                <span>{{tweet.liked.count}}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <style>
+        .tweet-body:hover{
+    cursor:grab;
+}
+    </style>
+
+{% endblock feed %}

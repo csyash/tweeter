@@ -1,0 +1,31 @@
+{% extends 'base/feed.html' %}
+{% load static %}
+
+{% block js %}
+<script src="{% static 'js/profilePage.js' %}"></script>
+{% endblock js %}
+{% block user_following_followers %}
+<div class="container my-3">
+    <div class="profile-page-header">
+        <h2>
+            {{user}}
+        </h2>
+        <table class="table table-primary">
+            <tr>
+                <th>Following</th>
+                <th>Followers</th>
+            </tr>
+            <tr>
+                <th>{{ user.following.count }}</th>
+                <th>{{ user.followers.count }}</th>
+            </tr>
+        </table>
+        {% if request.user != user %}
+            
+            <button class="btn btn-dark unfollow-btn">Unfollow</button>    
+            <button class="btn btn-dark follow-btn">Follow</button>
+            
+        {% endif %}
+    </div>
+</div>
+{% endblock user_following_followers %}

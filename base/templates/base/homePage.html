@@ -1,0 +1,72 @@
+{% extends 'base/layout.html' %}
+{% load static %}
+
+{% block js %}
+<script src="{% static 'js/homePage.js' %}?v=3"></script>
+
+{% endblock js %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/homePage1.css' %}?v=5">
+{% endblock css %}
+
+{% block content %}
+
+
+
+<div class="home-container">
+    <div class="sidebar card">
+        <div class="sidebar-header">     
+            <a href="{% url 'homePage'%}" class="sidebar-links">HOME</a>
+            <a href="#" class="sidebar-links">EXPLORE</a>
+            <a href="#" class="sidebar-links">MESSAGES</a>
+        </div> 
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+         <span style="font-size: large;">
+            {{request.user}}
+         </span> 
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li class="p-2"><a class="dropdown-item" href="{% url 'logout' %}" >Logout</a></li>
+          <li class="p-2"><a class="dropdown-item" href="{% url 'profilePage' request.user.username %}">Profile</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="feed card">
+        {% if messages %}
+    <div class="card" style="background-color: red;">
+        <ul class="messages">
+        {% for message in messages %}
+            <h3{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: white;">{{ message }}</h3>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+        {% block feed %}
+        {% endblock feed %}
+
+    </div>
+    <div class="side-menu card">
+        <div class="card">
+            <div class="side-menu-header">
+                <h2>who-to-follow</h2>
+            </div>
+            <div class="side-menu-body">
+                {% for user in wtf %}     
+                    <div class="user">
+                        <a href="{% url 'profilePage' user.username %}" class="sidebar-links">
+                            <h2>
+                                @{{user.username}}
+                            </h2>
+                        </a>
+                        
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
